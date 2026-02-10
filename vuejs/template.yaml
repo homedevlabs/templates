@@ -26,6 +26,30 @@ spec:
           ui:options:
             allowedKinds: [Group, User]
 
+    - title: Extras (SpecKit)
+      properties:
+        skills:
+          title: Adicionar Skills
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - tailwind-expert
+              - accessibility-a11y
+              - testing-jest
+              - e2e-playwright
+              - github-actions-workflows
+              - kubernetes-manifests
+            enumNames:
+              - 'Tailwind CSS (Expert)'
+              - 'Accessibility (A11y)'
+              - 'Jest Testing'
+              - 'Playwright E2E'
+              - 'GitHub Actions Workflows'
+              - 'Kubernetes Manifests'
+          ui:widget: checkboxes
+
     - title: Configuração Traefik
       required: [subdomain]
       properties:
@@ -61,11 +85,59 @@ spec:
           repoUrl: "https://${{ (parameters.repoUrl | parseRepoUrl).host }}/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}"
  
     - id: fetch-speckit
-      name: Fetching SpecKit
+      name: Fetching SpecKit Core
       action: fetch:plain
       input:
         url: https://github.com/homedevlabs/templates/tree/main/common/speckit
         targetPath: .
+
+    - id: fetch-skill-tailwind
+      name: Fetching Tailwind Skill
+      if: ${{ parameters.skills and 'tailwind-expert' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/tailwind-expert
+        targetPath: .agent/skills/tailwind-expert
+
+    - id: fetch-skill-a11y
+      name: Fetching A11y Skill
+      if: ${{ parameters.skills and 'accessibility-a11y' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/accessibility-a11y
+        targetPath: .agent/skills/accessibility-a11y
+
+    - id: fetch-skill-jest
+      name: Fetching Jest Skill
+      if: ${{ parameters.skills and 'testing-jest' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/testing-jest
+        targetPath: .agent/skills/testing-jest
+
+    - id: fetch-skill-playwright
+      name: Fetching Playwright Skill
+      if: ${{ parameters.skills and 'e2e-playwright' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/e2e-playwright
+        targetPath: .agent/skills/e2e-playwright
+
+    - id: fetch-skill-gha
+      name: Fetching GitHub Actions Skill
+      if: ${{ parameters.skills and 'github-actions-workflows' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/github-actions-workflows
+        targetPath: .agent/skills/github-actions-workflows
+
+    - id: fetch-skill-k8s
+      name: Fetching K8s Skill
+      if: ${{ parameters.skills and 'kubernetes-manifests' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/kubernetes-manifests
+        targetPath: .agent/skills/kubernetes-manifests
 
     - id: publish
       name: Publicando no GitHub

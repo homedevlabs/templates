@@ -38,10 +38,22 @@ spec:
               - postgres-best-practices
               - prisma-expert
               - bullmq-specialist
+              - logging-observability
+              - api-design-standard
+              - security-guardrails
+              - kubernetes-manifests
+              - github-actions-workflows
+              - testing-jest
             enumNames:
               - 'PostgreSQL (Best Practices)'
               - 'Prisma ORM (Expert)'
               - 'BullMQ (Background Jobs)'
+              - 'Logging & Observability'
+              - 'API Design Standards'
+              - 'Security Guardrails'
+              - 'Kubernetes Manifests'
+              - 'GitHub Actions Workflows'
+              - 'Jest Testing'
           ui:widget: checkboxes
 
     - title: Configuração Traefik
@@ -108,6 +120,54 @@ spec:
       input:
         url: https://github.com/homedevlabs/templates/tree/main/common/skills/bullmq-specialist
         targetPath: .agent/skills/bullmq-specialist
+
+    - id: fetch-skill-logging
+      name: Fetching Logging Skill
+      if: ${{ parameters.skills and 'logging-observability' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/logging-observability
+        targetPath: .agent/skills/logging-observability
+
+    - id: fetch-skill-api-design
+      name: Fetching API Design Skill
+      if: ${{ parameters.skills and 'api-design-standard' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/api-design-standard
+        targetPath: .agent/skills/api-design-standard
+
+    - id: fetch-skill-security
+      name: Fetching Security Skill
+      if: ${{ parameters.skills and 'security-guardrails' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/security-guardrails
+        targetPath: .agent/skills/security-guardrails
+
+    - id: fetch-skill-k8s
+      name: Fetching K8s Skill
+      if: ${{ parameters.skills and 'kubernetes-manifests' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/kubernetes-manifests
+        targetPath: .agent/skills/kubernetes-manifests
+
+    - id: fetch-skill-gha
+      name: Fetching GitHub Actions Skill
+      if: ${{ parameters.skills and 'github-actions-workflows' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/github-actions-workflows
+        targetPath: .agent/skills/github-actions-workflows
+
+    - id: fetch-skill-jest
+      name: Fetching Jest Skill
+      if: ${{ parameters.skills and 'testing-jest' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/testing-jest
+        targetPath: .agent/skills/testing-jest
 
     - id: publish
       name: Publicando no GitHub
