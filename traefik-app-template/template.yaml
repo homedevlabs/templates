@@ -69,14 +69,13 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
           subdomain: ${{ parameters.subdomain }}
-          repoUrl: ${{ parameters.repoUrl }}
+          repoUrl: https://github.com/${{ parameters.repoUrl }}
 
     - id: publish
       name: Publicando no GitHub
       action: publish:github
       input:
         description: Application created from Traefik Example Template
-        repoUrl: ${{ parameters.repoUrl }}
         defaultBranch: 'main'
 
     - id: register

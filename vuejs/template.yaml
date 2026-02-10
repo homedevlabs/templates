@@ -58,14 +58,13 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
           subdomain: ${{ parameters.subdomain }}
-          repoUrl: ${{ parameters.repoUrl }}
+          repoUrl: https://github.com/${{ parameters.repoUrl }}
 
     - id: publish
       name: Publicando no GitHub
       action: publish:github
       input:
         description: ${{ parameters.description }}
-        repoUrl: ${{ parameters.repoUrl }}
         defaultBranch: 'main'
 
     - id: register
