@@ -38,11 +38,14 @@ spec:
       properties:
         repoUrl:
           title: Repository Location
-          type: string
           ui:field: RepoUrlPicker
           ui:options:
             allowedHosts:
               - github.com
+            allowedOwners:
+              - homedevlabs
+            defaultOwner: homedevlabs
+          type: string
 
   steps:
     - id: fetch-base
