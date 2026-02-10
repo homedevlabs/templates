@@ -12,3 +12,15 @@ spec:
     - ./go/template.yaml
     - ./rust/template.yaml
     - ./flutter/template.yaml
+    - ./infrastructure/postgres/template.yaml
+    - ./infrastructure/redis/template.yaml
+    - ./infrastructure/elasticsearch/template.yaml
+    - ./infrastructure/kafka/template.yaml
+    - ./infrastructure/nats/template.yaml
+    - ./infrastructure/mariadb/template.yaml
+    - ./infrastructure/mongodb/template.yaml
+    - ./infrastructure/couchdb/template.yaml
+    - ./infrastructure/cassandra/template.yaml
+    - ./infrastructure/neo4j/template.yaml
+    - ./infrastructure/clickhouse/template.yaml
+    - ./infrastructure/sqlite/template.yaml
