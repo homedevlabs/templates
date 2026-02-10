@@ -26,7 +26,7 @@ spec:
         owner:
           title: Proprietário
           type: string
-          description: "O proprietário do componente (ex: user:guest ou group:default/administrators)"
+          description: ""O proprietário do componente (ex: user:guest ou group:default/administrators)""
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
@@ -40,7 +40,7 @@ spec:
         subdomain:
           title: Subdomínio
           type: string
-          description: O subdomínio que será usado (ex: exemplo -> exemplo.superlab.app)
+          description: "O subdomínio que será usado (ex: exemplo -> exemplo.superlab.app)"
           default: exemplo
 
     - title: Escolha um local

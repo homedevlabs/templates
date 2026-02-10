@@ -30,7 +30,7 @@ spec:
       required: [subdomain]
       properties:
         subdomain:
-          title: Subdomínio (ex: react.superlab.app)
+          title: "Subdomínio (ex: react.superlab.app)"
           type: string
 
     - title: Local do Repositório
