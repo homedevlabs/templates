@@ -1,0 +1,85 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: sqlite-volume
+  title: SQLite / PVC Storage (Infrastructure)
+  description: Provision a Persistent Volume for SQLite or General Use
+  tags: [infrastructure, sqlite, storage, pvc]
+spec:
+  owner: user:guest
+  type: resource
+
+  parameters:
+    - title: Volume Configuration
+      required: [name, owner]
+      properties:
+        name:
+          title: Volume Name
+          type: string
+        owner:
+          title: Owner
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds: [Group, User]
+        storage:
+          title: Storage Size
+          type: string
+          default: 1Gi
+          enum:
+            - 1Gi
+            - 5Gi
+            - 10Gi
+        accessMode:
+          title: Access Mode
+          type: string
+          default: ReadWriteOnce
+          enum:
+            - ReadWriteOnce
+            - ReadWriteMany
+
+    - title: Repository Location
+      required: [repoUrl]
+      properties:
+        repoUrl:
+          title: Repository Location
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts: [github.com]
+            allowedOwners: [homedevlabs]
+            defaultOwner: homedevlabs
+          type: string
+
+  steps:
+    - id: fetch-base
+      name: Fetching Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          storage: ${{ parameters.storage }}
+          accessMode: ${{ parameters.accessMode }}
+          owner: ${{ parameters.owner }}
+
+    - id: publish
+      name: Publishing to GitHub
+      action: publish:github
+      input:
+        description: Storage volume for ${{ parameters.name }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: 'main'
+
+    - id: register
+      name: Registering in Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

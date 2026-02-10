@@ -1,0 +1,73 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: clickhouse-db
+  title: ClickHouse Database (Infrastructure)
+  description: Provision a ClickHouse Database
+  tags: [infrastructure, clickhouse, olap, database]
+spec:
+  owner: user:guest
+  type: resource
+
+  parameters:
+    - title: Database Configuration
+      required: [name, owner, password]
+      properties:
+        name:
+          title: Database Name
+          type: string
+        owner:
+          title: Owner
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds: [Group, User]
+        password:
+          title: Admin Password
+          type: string
+          ui:widget: password
+
+    - title: Repository Location
+      required: [repoUrl]
+      properties:
+        repoUrl:
+          title: Repository Location
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts: [github.com]
+            allowedOwners: [homedevlabs]
+            defaultOwner: homedevlabs
+          type: string
+
+  steps:
+    - id: fetch-base
+      name: Fetching Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          password: ${{ parameters.password }}
+          owner: ${{ parameters.owner }}
+
+    - id: publish
+      name: Publishing to GitHub
+      action: publish:github
+      input:
+        description: ClickHouse for ${{ parameters.name }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: 'main'
+
+    - id: register
+      name: Registering in Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

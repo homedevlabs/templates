@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: MariaDB Database Instance
+  tags: [mariadb, sql, database, infrastructure]
+spec:
+  type: database
+  owner: ${{ values.owner }}
+  system: infrastructure

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: Apache Kafka Broker (Kraft)
+  tags: [kafka, messaging, infrastructure]
+spec:
+  type: streaming
+  owner: ${{ values.owner }}
+  system: infrastructure

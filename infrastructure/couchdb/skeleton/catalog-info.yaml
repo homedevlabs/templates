@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: CouchDB Database Instance
+  tags: [couchdb, nosql, database, infrastructure]
+spec:
+  type: database
+  owner: ${{ values.owner }}
+  system: infrastructure

@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: NATS Messaging Server
+  tags: [nats, messaging, infrastructure]
+spec:
+  type: messaging
+  owner: ${{ values.owner }}
+  system: infrastructure
