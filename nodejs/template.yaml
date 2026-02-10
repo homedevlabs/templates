@@ -60,6 +60,13 @@ spec:
           subdomain: ${{ parameters.subdomain }}
           repoUrl: "https://${{ (parameters.repoUrl | parseRepoUrl).host }}/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}"
 
+    - id: fetch-speckit
+      name: Fetching SpecKit
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/speckit
+        targetPath: .
+
     - id: publish
       name: Publicando no GitHub
       action: publish:github
