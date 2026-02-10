@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: flutter-template
   title: Flutter Template
-  description: Template para aplicações React com Vite e deploy no Traefik
+  description: Template para aplicações Flutter Web e deploy no Traefik
 spec:
   owner: user:guest
   type: service

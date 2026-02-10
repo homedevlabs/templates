@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: rust-template
   title: Rust Template
-  description: Template para aplicações React com Vite e deploy no Traefik
+  description: Template para aplicações Rust (Axum) e deploy no Traefik
 spec:
   owner: user:guest
   type: service

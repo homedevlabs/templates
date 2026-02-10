@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: vuejs-template
   title: Vue.js Template
-  description: Template para aplicações React com Vite e deploy no Traefik
+  description: Template para aplicações Vue.js e deploy no Traefik
 spec:
   owner: user:guest
   type: service

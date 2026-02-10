@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: python-template
   title: Python Template
-  description: Template para aplicações React com Vite e deploy no Traefik
+  description: Template para aplicações Python (FastAPI) e deploy no Traefik
 spec:
   owner: user:guest
   type: service

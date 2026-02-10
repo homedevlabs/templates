@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: go-template
   title: Go Template
-  description: Template para aplicações React com Vite e deploy no Traefik
+  description: Template para aplicações Go e deploy no Traefik
 spec:
   owner: user:guest
   type: service
