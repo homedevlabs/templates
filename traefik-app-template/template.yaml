@@ -26,7 +26,7 @@ spec:
         owner:
           title: Proprietário
           type: string
-          description: ""O proprietário do componente (ex: user:guest ou group:default/administrators)""
+          description: "O proprietário do componente (ex: user:guest ou group:default/administrators)"
           ui:field: OwnerPicker
           ui:options:
             allowedKinds:
