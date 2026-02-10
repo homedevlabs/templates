@@ -42,6 +42,8 @@ spec:
               - e2e-playwright
               - github-actions-workflows
               - kubernetes-manifests
+              - adr-standards
+              - techdocs-structure
             enumNames:
               - 'Tailwind CSS (Expert)'
               - 'React Query (Patterns)'
@@ -50,6 +52,8 @@ spec:
               - 'Playwright E2E'
               - 'GitHub Actions Workflows'
               - 'Kubernetes Manifests'
+              - 'ADR Standards (Decision Records)'
+              - 'TechDocs Structure'
           ui:widget: checkboxes
 
     - title: Configuração Traefik
@@ -148,6 +152,22 @@ spec:
       input:
         url: https://github.com/homedevlabs/templates/tree/main/common/skills/kubernetes-manifests
         targetPath: .agent/skills/kubernetes-manifests
+
+    - id: fetch-skill-adr
+      name: Fetching ADR Standards
+      if: ${{ parameters.skills and 'adr-standards' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/adr-standards
+        targetPath: .agent/skills/adr-standards
+
+    - id: fetch-skill-techdocs
+      name: Fetching TechDocs
+      if: ${{ parameters.skills and 'techdocs-structure' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/techdocs-structure
+        targetPath: .agent/skills/techdocs-structure
 
     - id: publish
       name: Publicando no GitHub

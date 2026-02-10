@@ -26,6 +26,28 @@ spec:
           ui:options:
             allowedKinds: [Group, User]
 
+    - title: Extras (SpecKit)
+      properties:
+        skills:
+          title: Adicionar Skills
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+              - flutter-bloc-pattern
+              - flutter-clean-arch
+              - adr-standards
+              - techdocs-structure
+              - github-actions-workflows
+            enumNames:
+              - 'Flutter BLoC Pattern'
+              - 'Clean Architecture (Layers)'
+              - 'ADR Standards (Decision Records)'
+              - 'TechDocs Structure'
+              - 'GitHub Actions Workflows'
+          ui:widget: checkboxes
+
     - title: Configuração Traefik
       required: [subdomain]
       properties:
@@ -61,11 +83,51 @@ spec:
           repoUrl: "https://${{ (parameters.repoUrl | parseRepoUrl).host }}/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}"
  
     - id: fetch-speckit
-      name: Fetching SpecKit
+      name: Fetching SpecKit Core
       action: fetch:plain
       input:
         url: https://github.com/homedevlabs/templates/tree/main/common/speckit
         targetPath: .
+
+    - id: fetch-skill-bloc
+      name: Fetching BLoC Pattern
+      if: ${{ parameters.skills and 'flutter-bloc-pattern' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/flutter-bloc-pattern
+        targetPath: .agent/skills/flutter-bloc-pattern
+
+    - id: fetch-skill-clean-arch
+      name: Fetching Clean Arch
+      if: ${{ parameters.skills and 'flutter-clean-arch' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/flutter-clean-arch
+        targetPath: .agent/skills/flutter-clean-arch
+
+    - id: fetch-skill-adr
+      name: Fetching ADR Standards
+      if: ${{ parameters.skills and 'adr-standards' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/adr-standards
+        targetPath: .agent/skills/adr-standards
+
+    - id: fetch-skill-techdocs
+      name: Fetching TechDocs
+      if: ${{ parameters.skills and 'techdocs-structure' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/techdocs-structure
+        targetPath: .agent/skills/techdocs-structure
+
+    - id: fetch-skill-gha
+      name: Fetching GitHub Actions
+      if: ${{ parameters.skills and 'github-actions-workflows' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/github-actions-workflows
+        targetPath: .agent/skills/github-actions-workflows
 
     - id: publish
       name: Publicando no GitHub

@@ -43,6 +43,12 @@ spec:
               - security-guardrails
               - kubernetes-manifests
               - github-actions-workflows
+              - adr-standards
+              - techdocs-structure
+              - feature-flags
+              - event-driven-arch
+              - container-hardening
+              - secret-management
             enumNames:
               - 'PostgreSQL (Best Practices)'
               - 'Prisma ORM (Expert)'
@@ -52,6 +58,12 @@ spec:
               - 'Security Guardrails'
               - 'Kubernetes Manifests'
               - 'GitHub Actions Workflows'
+              - 'ADR Standards (Decision Records)'
+              - 'TechDocs Structure'
+              - 'Feature Flags & Toggles'
+              - 'Event-Driven Architecture'
+              - 'Container Hardening'
+              - 'Secret Management'
           ui:widget: checkboxes
 
     - title: Configuração Traefik
@@ -158,6 +170,54 @@ spec:
       input:
         url: https://github.com/homedevlabs/templates/tree/main/common/skills/github-actions-workflows
         targetPath: .agent/skills/github-actions-workflows
+
+    - id: fetch-skill-adr
+      name: Fetching ADR Standards
+      if: ${{ parameters.skills and 'adr-standards' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/adr-standards
+        targetPath: .agent/skills/adr-standards
+
+    - id: fetch-skill-techdocs
+      name: Fetching TechDocs
+      if: ${{ parameters.skills and 'techdocs-structure' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/techdocs-structure
+        targetPath: .agent/skills/techdocs-structure
+
+    - id: fetch-skill-ff
+      name: Fetching Feature Flags
+      if: ${{ parameters.skills and 'feature-flags' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/feature-flags
+        targetPath: .agent/skills/feature-flags
+
+    - id: fetch-skill-eda
+      name: Fetching Event Driven
+      if: ${{ parameters.skills and 'event-driven-arch' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/event-driven-arch
+        targetPath: .agent/skills/event-driven-arch
+
+    - id: fetch-skill-hardening
+      name: Fetching Hardening
+      if: ${{ parameters.skills and 'container-hardening' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/container-hardening
+        targetPath: .agent/skills/container-hardening
+
+    - id: fetch-skill-secrets
+      name: Fetching Secrets Mgmt
+      if: ${{ parameters.skills and 'secret-management' in parameters.skills }}
+      action: fetch:plain
+      input:
+        url: https://github.com/homedevlabs/templates/tree/main/common/skills/secret-management
+        targetPath: .agent/skills/secret-management
 
     - id: publish
       name: Publicando no GitHub
