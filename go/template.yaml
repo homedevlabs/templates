@@ -58,6 +58,7 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
           subdomain: ${{ parameters.subdomain }}
+          repoUrl: ${{ parameters.repoUrl }}
 
     - id: publish
       name: Publicando no GitHub

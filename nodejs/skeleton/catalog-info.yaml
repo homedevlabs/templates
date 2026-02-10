@@ -2,6 +2,16 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{ values.name }}
+  description: ${{ values.description }}
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  links:
+    - url: https://${{ values.subdomain }}.superlab.app
+      title: Website
+      icon: dashboard
+    - url: ${{ values.repoUrl }}
+      title: Source Code
+      icon: github
 spec:
   type: service
   owner: ${{ values.owner }}
