@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: Redis Queue Instance
+  tags: [redis, queue, infrastructure]
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: queue
+  owner: ${{ values.owner }}
+  system: infrastructure

@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.name }}
+  description: ElasticSearch Cluster (Single Node)
+  tags: [elasticsearch, logging, infrastructure]
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: elasticsearch
+  owner: ${{ values.owner }}
+  system: infrastructure

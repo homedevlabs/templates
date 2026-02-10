@@ -1,0 +1,92 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: postgres-db
+  title: PostgreSQL Database (Infrastructure)
+  description: Provision a PostgreSQL Database with Persistent Storage
+  tags:
+    - infrastructure
+    - database
+    - postgres
+spec:
+  owner: user:guest
+  type: resource
+
+  parameters:
+    - title: Database Configuration
+      required:
+        - name
+        - owner
+        - password
+      properties:
+        name:
+          title: Database Name (Identifier)
+          type: string
+          description: Unique name for the database instance (e.g. users-db)
+        owner:
+          title: Owner
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds: [Group, User]
+        password:
+          title: Postgres Password
+          type: string
+          ui:widget: password
+          description: Password for the 'postgres' user
+        storage:
+          title: Storage Size
+          type: string
+          default: 1Gi
+          enum:
+            - 1Gi
+            - 5Gi
+            - 10Gi
+
+    - title: Repository Location
+      required: [repoUrl]
+      properties:
+        repoUrl:
+          title: Repository Location
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
+            allowedOwners:
+              - homedevlabs
+            defaultOwner: homedevlabs
+          type: string
+
+  steps:
+    - id: fetch-base
+      name: Fetching Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          password: ${{ parameters.password }}
+          storage: ${{ parameters.storage }}
+          owner: ${{ parameters.owner }}
+
+    - id: publish
+      name: Publishing to GitHub
+      action: publish:github
+      input:
+        description: Infrastructure provisioning for ${{ parameters.name }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: 'main'
+
+    - id: register
+      name: Registering in Catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}
