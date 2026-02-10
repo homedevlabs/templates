@@ -76,6 +76,7 @@ spec:
       action: publish:github
       input:
         description: Application created from Traefik Example Template
+        repoUrl: ${{ parameters.repoUrl }}
         defaultBranch: 'main'
 
     - id: register

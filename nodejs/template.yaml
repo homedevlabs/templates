@@ -65,6 +65,7 @@ spec:
       action: publish:github
       input:
         description: ${{ parameters.description }}
+        repoUrl: ${{ parameters.repoUrl }}
         defaultBranch: 'main'
 
     - id: register
