@@ -1,0 +1,77 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: vuejs-template
+  title: Vue.js Template
+  description: Template para aplicações React com Vite e deploy no Traefik
+spec:
+  owner: user:guest
+  type: service
+
+  parameters:
+    - title: Detalhes do Projeto
+      required:
+        - name
+        - owner
+      properties:
+        name:
+          title: Nome do Projeto
+          type: string
+        description:
+          title: Descrição
+          type: string
+        owner:
+          title: Proprietário
+          ui:field: OwnerPicker
+          ui:options:
+            allowedKinds: [Group, User]
+
+    - title: Configuração Traefik
+      required: [subdomain]
+      properties:
+        subdomain:
+          title: Subdomínio (ex: react.superlab.app)
+          type: string
+
+    - title: Local do Repositório
+      required: [repoUrl]
+      properties:
+        repoUrl:
+          title: Repository Location
+          type: string
+          ui:field: RepoUrlPicker
+
+  steps:
+    - id: fetch-base
+      name: Preparando Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          description: ${{ parameters.description }}
+          owner: ${{ parameters.owner }}
+          subdomain: ${{ parameters.subdomain }}
+
+    - id: publish
+      name: Publicando no GitHub
+      action: publish:github
+      input:
+        description: ${{ parameters.description }}
+        repoUrl: ${{ parameters.repoUrl }}
+        defaultBranch: 'main'
+
+    - id: register
+      name: Registrando no Catálogo
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+      - title: Repositório
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Abrir no Catálogo
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

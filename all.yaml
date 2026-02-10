@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: all-templates
+spec:
+  targets:
+    - ./traefik-app-template/template.yaml
+    - ./react-vite/template.yaml
+    - ./vuejs/template.yaml
+    - ./nodejs/template.yaml
+    - ./python/template.yaml
+    - ./go/template.yaml
+    - ./rust/template.yaml
+    - ./flutter/template.yaml
